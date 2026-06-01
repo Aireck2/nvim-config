@@ -1,93 +1,132 @@
-# nvim config
 
-A [NvChad](https://github.com/NvChad/NvChad)-based Neovim configuration with LSP, formatting, linting, and LaTeX support.
+<div align="center">
+  <img src="https://raw.githubusercontent.com/NvChad/NvChad.github.io/refs/heads/main/hero.webp" alt="NvChad" width="200" />
+</div>
 
-## Requirements
+# Aireck2's Neovim Configuration
 
-- [Neovim](https://github.com/neovim/neovim) >= 0.9.0
-- [git](https://git-scm.com/) (for plugin management)
-- A [Nerd Font](https://www.nerdfonts.com/) (for icons) – e.g. [JetBrainsMono Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases)
-- [lazy.nvim](https://github.com/folke/lazy.nvim) (bootstrapped automatically on first launch)
-- **Optional** – language-specific tools installed via `mason` or system package manager:
-  - LSP servers: `pyright`, `texlab`, `marksman`, `clangd`, `ts_ls`, `cssls`, `html`, `jsonls`
-  - Formatters: `black` (Python), `clang-format` (C/C++), `prettier` (JS/TS/MD), `latexindent` (LaTeX)
-  - Linters: `pylint` (Python), `eslint_d` (JS/TS)
+[![Neovim](https://img.shields.io/badge/Neovim-0.9%2B-green?style=flat-square&logo=neovim)](https://neovim.io)
+[![NvChad](https://img.shields.io/badge/NvChad-v2.5-blue?style=flat-square)](https://nvchad.com)
+[![Lua](https://img.shields.io/badge/Lua-darkblue?style=flat-square&logo=lua)](https://lua.org)
+[![License: Unlicense](https://img.shields.io/badge/License-Unlicense-lightgray?style=flat-square)](LICENSE)
 
-## Install
+A modern Neovim configuration built on [NvChad v2.5](https://nvchad.com), with a focus on **LaTeX editing**, **AI-assisted coding**, and **polyglot LSP support**.
 
-1. **Backup** your existing Neovim config:
+[Features](#features) • [Requirements](#requirements) • [Installation](#installation) • [Configuration](#configuration) • [Key mappings](#key-mappings) • [Post-install](#post-install)
 
-   ```sh
-   mv ~/.config/nvim ~/.config/nvim.bak
-   mv ~/.local/share/nvim ~/.local/share/nvim.bak
-   mv ~/.local/state/nvim ~/.local/state/nvim.bak
-   ```
-
-2. **Clone** this repo:
-
-   ```sh
-   git clone https://github.com/<your-username>/nvim.git ~/.config/nvim
-   ```
-
-3. **Launch** Neovim – lazy.nvim will bootstrap and install all plugins automatically:
-
-   ```sh
-   nvim
-   ```
-
-4. **Install LSP servers, formatters, and linters** via Mason (optional):
-
-   ```sh
-   :Mason
-   ```
-
-   Or let them auto-install on first use.
-
-## Structure
-
-```
-~/.config/nvim
-├── init.lua              # Entry point; bootstraps lazy.nvim, loads NvChad
-├── lazy-lock.json        # Lockfile for plugin versions
-├── lua/
-│   ├── chadrc.lua        # NvChad UI config (theme, tabufline, etc.)
-│   ├── autocmds.lua      # Autocommands (imports NvChad defaults)
-│   ├── mappings.lua      # Custom keymaps
-│   ├── options.lua       # Editor options (imports NvChad defaults)
-│   ├── plugins/
-│   │   └── init.lua      # Extra plugins & overrides
-│   └── configs/
-│       ├── lazy.lua      # lazy.nvim options & performance tweaks
-│       ├── lspconfig.lua # LSP server configuration
-│       ├── conform.lua   # Formatter config (conform.nvim)
-│       └── lint.lua      # Linter config (nvim-lint)
-└── .stylua.toml          # StyLua formatting rules
-```
+---
 
 ## Features
 
-- **Plugin manager**: [lazy.nvim](https://github.com/folke/lazy.nvim) – fast, declarative
-- **UI & theme**: [NvChad UI](https://github.com/NvChad/ui) with tokyonight theme
-- **LSP**: `nvim-lspconfig` with support for TypeScript, Python, C/C++, LaTeX, HTML/CSS/JSON, Markdown
-- **Formatting**: `conform.nvim` – auto-format on save with language-specific formatters
-- **Linting**: `nvim-lint` – lint on save (pylint for Python, eslint_d for JS/TS)
-- **Completion**: NvChad's blink integration
-- **AI**: Codeium (autocomplete)
-- **LaTeX**: `luasnip-latex-snippets` + `nabla.nvim` for math preview + `vimtex`
-- **Tree-sitter**: syntax highlighting for Lua, VimL, Markdown, LaTeX, HTML, CSS, and more
+- **NvChad foundation** -- Clean UI with `tokyonight` theme, statusline, tabufline, and file explorer
+- **LSP everywhere** -- Automatic language support via `neovim/nvim-lspconfig` for TypeScript, Python, C/C++, LaTeX, HTML, CSS, JSON, Markdown
+- **Format on save** -- Auto-formatting with `conform.nvim` (prettier, black, clang-format, latexindent)
+- **Lint on save** -- Real-time linting with `nvim-lint` (eslint_d, pylint)
+- **Modern completion** -- `blink.cmp` for fast, built-in completions
+- **AI code completion** -- [Codeium](https://codeium.com) integration for AI-powered suggestions
+- **LaTeX toolchain** -- Treesitter highlighting, `vimtex`, `luasnip-latex-snippets`, `nabla.nvim` for inline math preview
+- **Treesitter** -- Syntax highlighting for Lua, VimL, Markdown, LaTeX, BibTeX, HTML, CSS
+- **Plugin manager** -- `lazy.nvim` with aggressive startup optimization (21 built-in plugins disabled)
+- **Mason** -- Auto-installs `tree-sitter-cli` and other LSP/tool binaries
 
-## Key Mappings
+## Requirements
 
-| Mode | Key      | Action                |
-|------|----------|-----------------------|
-| `n`  | `;`      | Enter command mode    |
-| `i`  | `jk`     | Escape insert mode    |
-| `n`  | `<leader>p` | Nabla math popup   |
-| `n`  | `<leader>mt` | Toggle math preview |
+- [Neovim](https://neovim.io) >= 0.9.0
+- [Git](https://git-scm.com) 2.19+
+- A [Nerd Font](https://www.nerdfonts.com) (for icons)
+- `make`, `gcc`, and `ripgrep` (for `telescope.nvim` and `nvim-treesitter`)
 
-See NvChad defaults for all other mappings (`<leader>w` to save, `<leader>q` to quit, `<Tab>` to cycle buffers, etc.).
+## Installation
 
-## Credits
+> [!IMPORTANT]
+> This configuration **replaces** your existing Neovim configuration.
+> Back up your current config before proceeding:
 
-- [NvChad](https://github.com/NvChad/NvChad) – the framework this config is built on
-- [LazyVim starter](https://github.com/LazyVim/starter) – inspiration for the starter template
+```bash
+mv ~/.config/nvim ~/.config/nvim.bak
+mv ~/.local/share/nvim ~/.local/share/nvim.bak
+```
+
+**Clone the repository:**
+
+```bash
+git clone https://github.com/Aireck2/nvim-config ~/.config/nvim
+```
+
+**Start Neovim:**
+
+```bash
+nvim
+```
+
+lazy.nvim bootstraps automatically on first launch. All plugins will be installed and configured. Restart Neovim once the installation completes.
+
+## Configuration
+
+The configuration is structured in `lua/`:
+
+| Path | Purpose |
+|---|---|
+| `init.lua` | Entry point -- bootstraps lazy.nvim, loads NvChad + user plugins |
+| `lua/chadrc.lua` | NvChad UI options (theme, dashboard, tabufline) |
+| `lua/mappings.lua` | Custom keymaps |
+| `lua/options.lua` | Neovim options (delegates to NvChad defaults) |
+| `lua/autocmds.lua` | Autocommands (delegates to NvChad defaults) |
+| `lua/plugins/init.lua` | User plugin specifications |
+| `lua/configs/lazy.lua` | lazy.nvim configuration and performance tuning |
+| `lua/configs/lspconfig.lua` | LSP server list |
+| `lua/configs/conform.lua` | Formatting rules per filetype |
+| `lua/configs/lint.lua` | Linting rules per filetype |
+
+### Enabled LSP Servers
+
+| Server | File types |
+|---|---|
+| `tsserver` / `ts_ls` | TypeScript, JavaScript, JSX, TSX |
+| `pyright` | Python |
+| `clangd` | C, C++ |
+| `texlab` | LaTeX |
+| `marksman` | Markdown |
+| `html` / `cssls` / `jsonls` | Web languages |
+
+### Formatters (auto on save)
+
+| File type | Formatter |
+|---|---|
+| Python | `black` |
+| C++ | `clang-format` |
+| JavaScript / TypeScript | `prettier` |
+| Markdown | `prettier` |
+| LaTeX | `latexindent` |
+
+### Linters (on save)
+
+| File type | Linter |
+|---|---|
+| Python | `pylint` |
+| JavaScript / TypeScript | `eslint_d` |
+
+## Key mappings
+
+| Mode | Keys | Action |
+|---|---|---|
+| Normal | `;` | Enter command mode (`:`) |
+| Insert | `jk` | Exit insert mode (`<Esc>`) |
+
+All standard NvChad mappings apply:
+- `<leader>e` -- Toggle file explorer
+- `<leader>ff` -- Find files (Telescope)
+- `<leader>fw` -- Live grep (Telescope)
+- `<leader>p` -- Nabla math preview popup
+- `<leader>mt` -- Toggle Nabla virtual math text
+
+## Post-install
+
+1. **Install LSP servers** -- Run `:Mason` and install any additional LSP servers you need
+2. **Install formatters** -- Ensure `black`, `prettier`, `clang-format`, and `latexindent` are available on your `$PATH`
+3. **Codeium** -- Run `:Codeium Auth` to authenticate your Codeium account for AI completions
+4. **Treesitter** -- Run `:TSInstall all` to install additional language parsers
+
+> [!TIP]
+> To customize the theme or UI options, edit `lua/chadrc.lua`.
+> To add new plugins, add their specifications to `lua/plugins/init.lua`.
