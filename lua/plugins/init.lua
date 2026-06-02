@@ -77,7 +77,6 @@ return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     opts = {
-      -- Add 'latex' and 'bibtex' to this list
       ensure_installed = {
         "lua",
         "vim",
@@ -85,8 +84,10 @@ return {
         "query",
         "markdown",
         "markdown_inline",
-        "latex", -- <--- This is the one you're missing
+        "latex",
         "bibtex",
+        "typst",
+        "tinymist",
       },
       highlight = {
         enable = true,
