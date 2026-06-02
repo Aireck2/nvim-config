@@ -7,8 +7,9 @@ local options = {
     javascriptreact = { "prettier" },
     typescriptreact = { "prettier" },
     markdown = { "prettier" },
-    -- Latex formatting usually uses latexindent (built into texlive)
     tex = { "latexindent" },
+    json = { "prettier" },
+    typst = { "prettypst" },
   },
 
   format_on_save = {
