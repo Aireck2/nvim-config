@@ -10,6 +10,11 @@ local options = {
     tex = { "latexindent" },
     json = { "prettier" },
     typst = { "prettypst" },
+    terraform = { "terraform_fmt" },
+    lua = { "stylua" },
+    sh = { "shfmt" }, -- Agregado para scripts de terminal (.sh)
+    yaml = { "prettier" },
+    yml = { "prettier" },
   },
 
   format_on_save = {
