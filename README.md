@@ -19,13 +19,13 @@ A modern Neovim configuration built on [NvChad v2.5](https://nvchad.com), with a
 ## Features
 
 - **NvChad foundation** -- Clean UI with `tokyonight` theme, statusline, tabufline, and file explorer
-- **LSP everywhere** -- Automatic language support via `neovim/nvim-lspconfig` for TypeScript, Python, C/C++, LaTeX, HTML, CSS, JSON, Markdown
-- **Format on save** -- Auto-formatting with `conform.nvim` (prettier, black, clang-format, latexindent)
+- **LSP everywhere** -- Automatic language support via `neovim/nvim-lspconfig` for TypeScript, Python, C/C++, LaTeX, HTML, CSS, JSON, Markdown, Terraform, Lua, Bash, Docker, YAML
+- **Format on save** -- Auto-formatting with `conform.nvim` (prettier, black, clang-format, latexindent, stylua, shfmt, terraform_fmt)
 - **Lint on save** -- Real-time linting with `nvim-lint` (eslint_d, pylint)
 - **Modern completion** -- `blink.cmp` for fast, built-in completions
 - **AI code completion** -- [Codeium](https://codeium.com) integration for AI-powered suggestions
 - **LaTeX toolchain** -- Treesitter highlighting, `vimtex`, `luasnip-latex-snippets`, `nabla.nvim` for inline math preview
-- **Treesitter** -- Syntax highlighting for Lua, VimL, Markdown, LaTeX, BibTeX, HTML, CSS
+- **Treesitter** -- Syntax highlighting for Lua, VimL, Markdown, LaTeX, BibTeX, Python, C/C++, JavaScript, TypeScript, JSON, YAML, Bash, Terraform, Go, Rust, and more
 - **Plugin manager** -- `lazy.nvim` with aggressive startup optimization (21 built-in plugins disabled)
 - **Mason** -- Auto-installs `tree-sitter-cli` and other LSP/tool binaries
 
@@ -82,11 +82,17 @@ The configuration is structured in `lua/`:
 
 | Server | File types |
 |---|---|
-| `tsserver` / `ts_ls` | TypeScript, JavaScript, JSX, TSX |
+| `ts_ls` | TypeScript, JavaScript, JSX, TSX |
 | `pyright` | Python |
 | `clangd` | C, C++ |
 | `texlab` | LaTeX |
 | `marksman` | Markdown |
+| `lua_ls` | Lua |
+| `bashls` | Bash |
+| `yamlls` | YAML |
+| `terraformls` | Terraform |
+| `dockerls` | Dockerfile |
+| `prettypst` | Typst |
 | `html` / `cssls` / `jsonls` | Web languages |
 
 ### Formatters (auto on save)
@@ -98,6 +104,10 @@ The configuration is structured in `lua/`:
 | JavaScript / TypeScript | `prettier` |
 | Markdown | `prettier` |
 | LaTeX | `latexindent` |
+| Lua | `stylua` |
+| Terraform | `terraform_fmt` |
+| Shell | `shfmt` |
+| YAML / JSON | `prettier` |
 
 ### Linters (on save)
 
