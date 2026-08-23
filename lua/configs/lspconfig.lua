@@ -15,6 +15,7 @@ local servers = {
   "bashls", -- <-- Recomendado: Para scripts de terminal (.sh)
   "dockerls", -- <-- Recomendado: Para Dockerfiles
   "yamlls", -- <-- Recomendado: Para archivos YAML / Kubernetes
+  "lemminx", -- <-- Recomendado: Para archivos XML
 }
 vim.lsp.enable(servers)
 
