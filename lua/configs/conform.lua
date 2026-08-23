@@ -15,6 +15,7 @@ local options = {
     sh = { "shfmt" }, -- Agregado para scripts de terminal (.sh)
     yaml = { "prettier" },
     yml = { "prettier" },
+    java = { "google_java_format" },
   },
 
   format_on_save = {

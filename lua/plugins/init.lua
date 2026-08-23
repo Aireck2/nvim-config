@@ -37,7 +37,7 @@ return {
 
   {
     "williamboman/mason.nvim",
-    opts = { ensure_installed = { "tree-sitter-cli" } },
+    opts = { ensure_installed = { "jdtls", "google-java-format", "checkstyle", "lemminx", "tree-sitter-cli" } },
   },
 
   {
@@ -101,6 +101,7 @@ return {
         "dockerfile",
         "go",
         "rust",
+        "java",
       },
       highlight = {
         enable = true,
@@ -126,5 +127,9 @@ return {
         "css",
       },
     },
+  },
+  {
+    "mfussenegger/nvim-jdtls",
+    ft = { "java" },
   },
 }

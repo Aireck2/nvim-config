@@ -4,6 +4,7 @@ lint.linters_by_ft = {
   python = { "pylint" },
   javascript = { "eslint_d" },
   typescript = { "eslint_d" },
+  java = { "checkstyle" },
 }
 
 -- Create an autocmd to lint on save
