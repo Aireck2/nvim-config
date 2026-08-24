@@ -1,17 +1,33 @@
+-- ============================================================================
+-- USER PLUGIN SPECIFICATIONS (lazy.nvim)
+-- ============================================================================
+-- Note: NvChad already includes core plugins (nvim-tree, telescope, which-key,
+-- gitsigns, indent-blankline, etc.). Add or customize plugins here.
+-- ============================================================================
+
 return {
+  -- ==========================================================================
+  -- 1. CODE FORMATTING (conform.nvim)
+  -- ==========================================================================
   {
     "stevearc/conform.nvim",
-    event = "BufWritePre", -- uncomment for format on save
+    event = "BufWritePre", -- Auto-format on save
     opts = require "configs.conform",
   },
 
-  -- These are some examples, uncomment them if you want to see them work!
+  -- ==========================================================================
+  -- 2. LSP CLIENT CONFIGURATION (nvim-lspconfig)
+  -- ==========================================================================
   {
     "neovim/nvim-lspconfig",
     config = function()
       require "configs.lspconfig"
     end,
   },
+
+  -- ==========================================================================
+  -- 3. ASYNCHRONOUS LINTER (nvim-lint)
+  -- ==========================================================================
   {
     "mfussenegger/nvim-lint",
     event = { "BufReadPre", "BufNewFile" },
@@ -19,88 +35,82 @@ return {
       require "configs.lint"
     end,
   },
-  {
-    "iurimateus/luasnip-latex-snippets.nvim",
-    -- This ensures it loads for both LaTeX and Markdown files
-    ft = { "tex", "markdown" },
-    dependencies = { "L3MON4D3/LuaSnip", "lervag/vimtex" },
-    config = function()
-      require("luasnip-latex-snippets").setup {
-        use_treesitter = true,
-      }
-      -- This allows snippets to expand when you press Tab
-      require("luasnip").config.set_config {
-        enable_autosnippets = true,
-      }
-    end,
-  },
 
+  -- ==========================================================================
+  -- 4. PACKAGE MANAGEMENT (mason.nvim)
+  -- ==========================================================================
+  -- Automatically install LSP servers, linters, formatters, and debuggers.
+  -- Comment out any tools you don't need installed.
   {
     "williamboman/mason.nvim",
-    opts = { ensure_installed = { "jdtls", "google-java-format", "checkstyle", "lemminx", "tree-sitter-cli" } },
-  },
+    opts = {
+      ensure_installed = {
+        -- Core / CLI
+        "tree-sitter-cli",
 
-  {
-    "jbyuki/nabla.nvim",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-neo-tree/neo-tree.nvim",
-      "williamboman/mason.nvim",
+        -- Python (Uncomment if you want Mason to manage them)
+        -- "pyright",
+        -- "black",
+        -- "pylint",
+
+        -- Typst / LaTeX
+        "tinymist",
+        "prettypst",
+
+        -- Java & Enterprise (Comment out if not doing Java development)
+        "jdtls",
+        "google-java-format",
+        "checkstyle",
+        "lemminx",
+      },
     },
-    lazy = true,
-
-    config = function()
-      require("nvim-treesitter.configs").setup {
-        ensure_installed = { "latex" },
-        auto_install = true,
-        sync_install = false,
-      }
-    end,
-
-    keys = function()
-      return {
-        {
-          "<leader>p",
-          ':lua require("nabla").popup()<cr>',
-          desc = "NablaPopUp",
-        },
-        {
-          "<leader>mt",
-          ':lua require("nabla").toggle_virt()',
-          desc = "Toogle Math Preview",
-        },
-      }
-    end,
   },
 
+  -- ==========================================================================
+  -- 5. SYNTAX HIGHLIGHTING & PARSERS (nvim-treesitter)
+  -- ==========================================================================
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     opts = {
       ensure_installed = {
+        -- Core / Editor
         "lua",
         "vim",
         "vimdoc",
         "query",
+
+        -- Python
+        "python",
+
+        -- Web & Frontend
+        "html",
+        "css",
+        "javascript",
+        "typescript",
+        "json",
+        "yaml",
+
+        -- Systems Programming
+        "c",
+        "cpp",
+        "go",
+        "rust",
+
+        -- Documentation & Academic
         "markdown",
         "markdown_inline",
         "latex",
         "bibtex",
         "typst",
-        "tinymist",
-        "python",
-        "cpp",
-        "c",
-        "javascript",
-        "typescript",
-        "json",
-        "yaml",
+
+        -- DevOps & Shell
         "bash",
         "terraform",
         "hcl",
         "dockerfile",
-        "go",
-        "rust",
+
+        -- Java (Comment out if not doing Java)
         "java",
       },
       highlight = {
@@ -109,25 +119,63 @@ return {
     },
   },
 
-  -- test new blink
+  -- ==========================================================================
+  -- 6. COMPLETION ENGINE (blink.cmp)
+  -- ==========================================================================
   { import = "nvchad.blink.lazyspec" },
+
+  -- ==========================================================================
+  -- 7. AI CODE COMPLETION (Codeium)
+  -- ==========================================================================
   {
     "Exafunction/codeium.vim",
     event = "BufEnter",
   },
 
+  -- ==========================================================================
+  -- 8. LATEX & MATH DOCUMENTATION SUITE (Optional)
+  -- ==========================================================================
   {
-    "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = {
-        "vim",
-        "lua",
-        "vimdoc",
-        "html",
-        "css",
-      },
-    },
+    "iurimateus/luasnip-latex-snippets.nvim",
+    ft = { "tex", "markdown" },
+    dependencies = { "L3MON4D3/LuaSnip", "lervag/vimtex" },
+    config = function()
+      require("luasnip-latex-snippets").setup {
+        use_treesitter = true,
+      }
+      require("luasnip").config.set_config {
+        enable_autosnippets = true,
+      }
+    end,
   },
+
+  {
+    "jbyuki/nabla.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+    },
+    lazy = true,
+    keys = function()
+      return {
+        {
+          "<leader>p",
+          ':lua require("nabla").popup()<cr>',
+          desc = "Nabla Popup Math Preview",
+        },
+        {
+          "<leader>mt",
+          ':lua require("nabla").toggle_virt()',
+          desc = "Toggle Math Virtual Text Preview",
+        },
+      }
+    end,
+  },
+
+  -- ==========================================================================
+  -- 9. JAVA IDE SUITE (nvim-jdtls)
+  -- ==========================================================================
+  -- Automatically activates only for Java files (`ft = { "java" }`).
+  -- Handled by ftplugin/java.lua. Comment this out if not using Java.
   {
     "mfussenegger/nvim-jdtls",
     ft = { "java" },
