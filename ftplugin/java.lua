@@ -1,4 +1,14 @@
--- ~/.config/nvim/ftplugin/java.lua
+-- ============================================================================
+-- JAVA FILETYPE CONFIGURATION (nvim-jdtls)
+-- ============================================================================
+-- This file ONLY executes when opening a Java file (`filetype=java`).
+-- It does NOT affect or slow down editing in other languages (Python, JS, C++, etc.).
+--
+-- To completely disable Java LSP support:
+-- 1. Comment out "mfussenegger/nvim-jdtls" in lua/plugins/init.lua
+-- 2. (Optional) Delete or rename this file (e.g. java.lua.bak)
+-- ============================================================================
+
 local jdtls = require "jdtls"
 
 -- Find project root directory based on build tools
